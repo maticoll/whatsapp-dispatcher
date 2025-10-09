@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Entornos
+.venv/
+venv/
+env/
+
+# Config locales/editores
+.DS_Store
+.idea/
+.vscode/
+
+# Tests / caches
+.pytest_cache/
+.mypy_cache/
+
+# Variables/secretos (si usás archivos locales)
+.env
+*.env
