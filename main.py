@@ -1,6 +1,10 @@
 from fastapi import FastAPI, Request, Response, Query
 import httpx, os
 
+import logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+
+
 ROUTES = {
     os.getenv("PHONE_NUMBER_ID_AGENT_A"): os.getenv("AGENT_A_URL"),
     os.getenv("PHONE_NUMBER_ID_AGENT_B"): os.getenv("AGENT_B_URL"),
@@ -35,6 +39,9 @@ async def inbound(request: Request):
             phone_id = meta.get("phone_number_id") or phone_id
 
     target = ROUTES.get(phone_id)
+
+    logging.info(f"Incoming phone_id={phone_id} -> target={target}")
+    
     if not target:
         return {"status": "ignored", "reason": "unknown phone_number_id", "phone_id": phone_id}
 
