@@ -9,9 +9,14 @@ ROUTES = {
 app = FastAPI()
 
 @app.get("/whatsapp")
-def verify(hub_mode: str = "", hub_challenge: str = "", hub_verify_token: str = ""):
+def verify(
+    hub_mode: str = Query(None, alias="hub.mode"),
+    hub_challenge: str = Query(None, alias="hub.challenge"),
+    hub_verify_token: str = Query(None, alias="hub.verify_token"),
+):
     if hub_verify_token == os.getenv("VERIFY_TOKEN"):
-        return Response(content=hub_challenge, media_type="text/plain")
+        # devolver el challenge en texto plano, como espera Meta
+        return Response(content=hub_challenge or "", media_type="text/plain")
     return Response(status_code=403)
 
 @app.post("/whatsapp")
